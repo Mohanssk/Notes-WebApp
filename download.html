@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Download Notes</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="upload.html">Upload Notes</a></li>
+            <li><a href="download.html">Download Notes</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Available Notes</h2>
+        <ul id="notes-list">
+            <!-- Dynamically populate this list with available notes -->
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 College Notes. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('http://127.0.0.1:8000/download');
+            const notes = await response.json();
+            const notesList = document.getElementById('notes-list');
+
+            notes.forEach(note => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `http://127.0.0.1:8000/download/${note.id}`;
+                link.textContent = note.filename;
+                listItem.appendChild(link);
+                notesList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
